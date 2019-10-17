@@ -1,5 +1,6 @@
 # async-await
 
+[![Build Status](https://www.travis-ci.com/Alwynblake/async-await.svg?branch=master)](https://www.travis-ci.com/Alwynblake/async-await)
 
 Use the node fs module
 Accepts a file name as a command line parameter
