@@ -19,3 +19,6 @@ Prove that the new file contents match your changed object
 // findout what is in the file, how can I change it and rewrite the file
 // redo as promise and await
 // add tests
+
+## uml
+![ll_merge image](./assets/async.JPG)
