@@ -15,8 +15,3 @@ describe('Testing file reader module', () => {
     });
   });
 });
-
-
-test('the string list has my name in it', () => {
-  expect(readerPromise).toContain('my name is Alistair, I promise!');
-});
