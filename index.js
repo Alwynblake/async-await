@@ -5,7 +5,7 @@ const filePath = process.argv[2];
 
 const useCallback = require('./lib/file-reader-callbacks');
 const usePromise = require('./lib/file-reader-promise');
-const useAwait = require('./lib/file-reader-async');
+// const useAync = require('./lib/file-reader-async');
 
 useCallback.read(filePath, (err, data) => {
   if (err) {
@@ -23,6 +23,17 @@ useCallback.read(filePath, (err, data) => {
     });
   }
 });
+
+usePromise.read(filePath)
+  .then(data => {
+    data.firstName = 'my name is Alistair, I promise!';
+    return data;
+  })
+  .then(obj => usePromise.write(filePath, obj))
+  .then(() => usePromise.read(filePath).then(content => { console.log(content); }))
+  .catch(e => {
+    throw e;
+  });
 
 // 'use strict';
 //
