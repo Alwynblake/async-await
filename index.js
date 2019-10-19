@@ -1,23 +1,50 @@
 'use strict';
+//bring in both files
 
-const fs = require('fs');
-const fileReader = require('./lib/reader.js');
+const filePath = process.argv[2];
 
-let file = `${__dirname}/data/file.txt`;
+const useCallback = require('./lib/file-reader-callbacks');
+const usePromise = require('./lib/file-reader-promise');
+const useAwait = require('./lib/file-reader-async');
 
-// A simple error first callback that regurgitates our file contents
-let showFileContents = (err,data) => {
-  if(err) { throw err; }
-  console.log(data);
-};
+useCallback.read(filePath, (err, data) => {
+  if (err) {
+    console.error(err);
+  } else {
+    data.hair = 'Changed to rainbow colored';
+    useCallback.write(filePath, data, (err) => {
+      if (err) {
+        console.error(err);
+      } else {
+        useCallback.read(filePath, (err, newData) => {
+          console.log(newData);
+        });
+      }
+    });
+  }
+});
 
-// Use our custom file reader instead of normal fs, so that we can change our interface to it ...
-// Invoke our file reader.  Note that the "reader" module is expected to simply export a function, not an object
-// We should be able to call it directly with a file and any callback we like.
+// 'use strict';
+//
+// const fs = require('fs');
+// const fileReader = require('./lib/reader.js');
+//
+// let file = `${__dirname}/data/file.txt`;
+//
+// // A simple error first callback that regurgitates our file contents
+// let showFileContents = (err,data) => {
+//   if(err) { throw err; }
+//   console.log(data);
+// };
+//
+// // Use our custom file reader instead of normal fs, so that we can change our interface to it ...
+// // Invoke our file reader.  Note that the "reader" module is expected to simply export a function, not an object
+// // We should be able to call it directly with a file and any callback we like.
+//
+// fileReader(file, showFileContents);
+//
+// // Using our custom reader as a promise ...
+// // fileReader( file )
+// //   .then( contents => showFileContents(null, contents ) )
+// //   .catch( showFileContents );
 
-fileReader(file, showFileContents);
-
-// Using our custom reader as a promise ...
-// fileReader( file )
-//   .then( contents => showFileContents(null, contents ) )
-//   .catch( showFileContents );
